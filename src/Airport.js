@@ -1,16 +1,19 @@
-function Airport(){
+'use strict';
+
+function Airport(weather){
+  this._weather = typeof weather !== 'undefined' ? weather : new Weather();
   this._hangar = []
 };
 
 Airport.prototype.clearForLanding = function(plane) {
-  if(this.isStormy()){
+  if(this._weather.isStormy()){
     throw new Error('Cannot land: weather is stormy');
 }
   this._hangar.push(plane);
 };
 
 Airport.prototype.clearForTakeOff = function(plane) {
-  if(this.isStormy()) {
+  if(this._weather.isStormy()) {
     throw new Error('Cannot take off: weather is stormy')
   }
   this._hangar = [];
@@ -18,8 +21,4 @@ Airport.prototype.clearForTakeOff = function(plane) {
 
 Airport.prototype.planes = function(){
   return this._hangar;
-};
-
-Airport.prototype.isStormy = function(){ 
-  return false;
 };
